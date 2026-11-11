@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BK Apps</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAFAF8; --card:#FFFFFF; --tx:#111312; --mut:#6B716D; --line:#E7E8E4;
+    --ac:#111312; --soft:#F1F2EE; --fillr:#16A05B; --pace:#E3262E; --warn:#FFF4C2;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#0F1110; --card:#171A18; --tx:#F2F3F0; --mut:#9AA19C; --line:#2A2E2B; --ac:#F2F3F0; --soft:#1E2220; --warn:#4A4214; }
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--tx);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:860px;margin:0 auto;padding:0 22px}
+  header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:800;letter-spacing:-.02em}
+  .mark{width:34px;height:34px;border-radius:10px;background:var(--ac);color:var(--bg);display:grid;place-items:center;font-weight:800;font-size:15px;letter-spacing:-.03em}
+  nav.links{display:flex;gap:4px;flex-wrap:wrap}
+  nav.links a{text-decoration:none;font-size:14px;font-weight:500;color:var(--mut);padding:7px 11px;border-radius:9px}
+  nav.links a:hover{color:var(--tx);background:var(--soft)}
+  nav.links a.on{color:var(--tx);background:var(--soft)}
+  main{padding:56px 0 40px}
+  .view{display:none}
+  .view.on{display:block;animation:fade .25s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  .eyebrow{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+  h1{font-size:clamp(34px,6vw,52px);line-height:1.08;letter-spacing:-.035em;margin:10px 0 16px;font-weight:800}
+  .lead{font-size:18px;color:var(--mut);max-width:560px;margin:0}
+  .apps{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:44px}
+  .app{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:14px;transition:transform .15s ease,box-shadow .15s ease}
+  .app:hover{transform:translateY(-2px);box-shadow:0 12px 30px -18px rgba(0,0,0,.25)}
+  .app-top{display:flex;align-items:center;gap:14px}
+  .icon{width:58px;height:58px;border-radius:15px;flex:none;border:1px solid var(--line);display:grid;place-items:center;overflow:hidden}
+  .app h2{margin:0;font-size:20px;letter-spacing:-.02em}
+  .app p{margin:0;color:var(--mut);font-size:15px}
+  .tag{display:inline-block;font-size:12px;font-weight:600;padding:3px 9px;border-radius:20px;background:var(--soft);color:var(--mut)}
+  .btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
+  .btn{text-decoration:none;font-size:14px;font-weight:600;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:var(--card)}
+  .btn.primary{background:var(--ac);color:var(--bg);border-color:var(--ac)}
+  .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:16px}
+  .fact{background:var(--soft);border-radius:16px;padding:16px 18px;font-size:14px;color:var(--mut)}
+  .fact b{display:block;color:var(--tx);font-size:15px;margin-bottom:2px}
+  article{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:clamp(22px,4vw,44px)}
+  article h1{font-size:clamp(28px,5vw,40px);margin-top:6px}
+  article h2{font-size:19px;letter-spacing:-.015em;margin:34px 0 8px;padding-top:4px}
+  article h3{font-size:16px;margin:22px 0 6px}
+  article p,article li{color:color-mix(in srgb,var(--tx) 86%,var(--mut));font-size:15.5px}
+  article ul{padding-left:20px;margin:8px 0}
+  article li{margin:4px 0}
+  .meta{color:var(--mut);font-size:14px;margin:0 0 8px}
+  .toc{background:var(--soft);border-radius:16px;padding:16px 20px;margin:22px 0 4px;font-size:14px}
+  .toc ol{margin:6px 0 0;padding-left:20px;columns:2;column-gap:28px}
+  .toc li{margin:3px 0;break-inside:avoid}
+  .toc a{text-decoration:none;color:var(--mut)}
+  .toc a:hover{color:var(--tx)}
+  .box{border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin:12px 0;font-size:15px}
+  .ph{background:var(--warn);padding:0 5px;border-radius:5px;font-weight:600}
+  table{width:100%;border-collapse:collapse;font-size:14.5px;margin:10px 0}
+  th,td{text-align:left;padding:10px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-weight:600;color:var(--mut);font-size:13px}
+  .back{display:inline-flex;align-items:center;gap:6px;text-decoration:none;color:var(--mut);font-size:14px;font-weight:500;margin-bottom:14px}
+  .back:hover{color:var(--tx)}
+  footer{border-top:1px solid var(--line);margin-top:30px}
+  .foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:26px 0 40px;color:var(--mut);font-size:14px}
+  .foot nav a{text-decoration:none;margin-left:16px}
+  .foot nav a:hover{color:var(--tx)}
+  @media (max-width:640px){
+    nav.links a{padding:6px 8px;font-size:13px}
+    .toc ol{columns:1}
+    .foot nav a{margin:0 14px 0 0}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#start"><span class="mark">BK</span><span>BK Apps</span></a>
+    <nav class="links">
+      <a href="#start" data-v="start">Apps</a>
+      <a href="#fillr" data-v="fillr">Fillr</a>
+      <a href="#pacealyst" data-v="pacealyst">PaceAlyst</a>
+      <a href="#impressum" data-v="impressum">Impressum</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- START -->
+  <section class="view" id="v-start">
+    <div class="eyebrow">BK Apps</div>
+    <h1>Kleine Apps,<br>die den Alltag leichter machen.</h1>
+    <p class="lead">Hier findest du unsere Apps, ihre Datenschutzerklärungen und wie du uns erreichst.</p>
+
+    <div class="apps">
+      <div class="app">
+        <div class="app-top">
+          <div class="icon" style="background:#fff">
+            <svg viewBox="0 0 58 58" width="58" height="58" aria-hidden="true"><text x="29" y="36" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-weight="800" font-size="19" fill="#111" letter-spacing="-0.6">fillr</text></svg>
+          </div>
+          <div>
+            <h2>Fillr</h2>
+            <span class="tag">Einkaufsliste · iOS &amp; Android</span>
+          </div>
+        </div>
+        <p>Einkaufsliste mit Preisen pro Laden, Endsaldo und Ladenvergleich – allein oder gemeinsam in einer Gruppe.</p>
+        <div class="btns">
+          <a class="btn primary" href="#fillr">Datenschutz</a>
+          <a class="btn" href="#impressum">Support</a>
+        </div>
+      </div>
+
+      <div class="app">
+        <div class="app-top">
+          <div class="icon" style="background:#E3262E">
+            <svg viewBox="0 0 58 58" width="58" height="58" aria-hidden="true">
+              <circle cx="29" cy="32" r="15" fill="none" stroke="#fff" stroke-width="3.5"/>
+              <rect x="25" y="11" width="8" height="4" rx="1.5" fill="#fff"/>
+              <line x1="29" y1="15" x2="29" y2="17" stroke="#fff" stroke-width="3"/>
+              <line x1="29" y1="32" x2="36" y2="25" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/>
+              <circle cx="29" cy="32" r="2.4" fill="#fff"/>
+            </svg>
+          </div>
+          <div>
+            <h2>PaceAlyst</h2>
+            <span class="tag">Laufanalyse · Android</span>
+          </div>
+        </div>
+        <p>Pace, Splits, Wettkampf-Prognosen und Trainingszonen für Läuferinnen und Läufer – auf Deutsch und Englisch, in km oder Meilen.</p>
+        <div class="btns">
+          <a class="btn primary" href="#pacealyst">Datenschutz</a>
+          <a class="btn" href="#impressum">Support</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="facts">
+      <div class="fact"><b>Kein Konto nötig</b>Einfach öffnen und loslegen.</div>
+      <div class="fact"><b>Daten in der EU</b>Server-Daten liegen in europäischen Rechenzentren.</div>
+      <div class="fact"><b>Support per E-Mail</b>Fragen und Wünsche jederzeit an uns.</div>
+    </div>
+  </section>
+
+  <!-- FILLR -->
+  <section class="view" id="v-fillr">
+    <a class="back" href="#start">← Alle Apps</a>
+    <article>
+      <div class="eyebrow">Fillr</div>
+      <h1>Datenschutzerklärung</h1>
+      <p class="meta">Stand: 11. November 2026</p>
+      <p>Diese Datenschutzerklärung gilt für die App <b>Fillr</b> für iOS und Android. Wir erklären hier in einfacher Sprache, welche Daten die App verarbeitet, wofür und welche Rechte du hast.</p>
+
+      <div class="toc"><b>Inhalt</b>
+        <ol>
+          <li><a href="#fillr" data-go="f1">Verantwortlicher</a></li>
+          <li><a href="#fillr" data-go="f2">Das Wichtigste in Kürze</a></li>
+          <li><a href="#fillr" data-go="f3">Daten nur auf deinem Gerät</a></li>
+          <li><a href="#fillr" data-go="f4">Gruppen</a></li>
+          <li><a href="#fillr" data-go="f5">Geteilte Preise</a></li>
+          <li><a href="#fillr" data-go="f6">Dienstleister: Google Firebase</a></li>
+          <li><a href="#fillr" data-go="f7">Fotos</a></li>
+          <li><a href="#fillr" data-go="f8">Externe Links</a></li>
+          <li><a href="#fillr" data-go="f9">Speicherdauer und Löschung</a></li>
+          <li><a href="#fillr" data-go="f10">Deine Rechte</a></li>
+          <li><a href="#fillr" data-go="f11">Kinder</a></li>
+          <li><a href="#fillr" data-go="f12">Änderungen</a></li>
+        </ol>
+      </div>
+
+      <h2 id="f1">1. Verantwortlicher</h2>
+      <div class="box">
+        Benedikt Kunisch<br>
+        Gartenstraße 6<br>
+        97337 Dettelbach, Deutschland<br>
+        E-Mail: <a href="mailto:Benedikt.kunisch@gmx.de">Benedikt.kunisch@gmx.de</a>
+      </div>
+
+      <h2 id="f2">2. Das Wichtigste in Kürze</h2>
+      <ul>
+        <li>Du brauchst <b>kein Konto</b>. Wir fragen weder E-Mail-Adresse noch Telefonnummer ab.</li>
+        <li>Fillr nutzt derzeit <b>keine Tracking- oder Analyse-Dienste</b>.</li>
+        <li>Deine eigene Liste, dein Profil und deine Einstellungen bleiben <b>nur auf deinem Gerät</b>.</li>
+        <li>Nur wenn du <b>Gruppen</b> nutzt oder <b>Preise einträgst</b>, werden Daten an unseren Server (Google Firebase, Speicherort EU) übertragen.</li>
+      </ul>
+
+      <h2 id="f3">3. Daten, die nur auf deinem Gerät gespeichert werden</h2>
+      <p>Folgende Angaben speichert Fillr ausschließlich lokal auf deinem Smartphone. Sie werden nicht an uns oder Dritte übertragen:</p>
+      <ul>
+        <li>deine persönliche Einkaufsliste und die dazu eingetragenen Preise,</li>
+        <li>dein Benutzername und dein Profilbild,</li>
+        <li>dein angegebener Standort (Stadt oder Land, als Text), dein Lieblingsladen,</li>
+        <li>Einstellungen wie Sprache und Design.</li>
+      </ul>
+      <p>Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Bereitstellung der von dir genutzten App-Funktionen).</p>
+
+      <h2 id="f4">4. Gruppen (gemeinsame Einkaufsliste)</h2>
+      <p>Wenn du eine Gruppe erstellst oder per Code einer Gruppe beitrittst, werden folgende Daten auf unserem Server gespeichert:</p>
+      <table>
+        <tr><th>Daten</th><th>Zweck</th></tr>
+        <tr><td>zufällige, anonyme Nutzer-ID</td><td>damit nur Mitglieder die Gruppe sehen und bearbeiten können</td></tr>
+        <tr><td>Gruppenname und Gruppen-Code</td><td>Erkennen der Gruppe und Beitritt</td></tr>
+        <tr><td>Einträge der Liste (Text, erledigt ja/nein, Preise, Zeitpunkt)</td><td>Anzeige der gemeinsamen Liste auf allen Geräten</td></tr>
+        <tr><td>dein Benutzername bei deinen Einträgen</td><td>Anzeige „von …“, damit alle sehen, wer etwas eingetragen hat</td></tr>
+      </table>
+      <p>Diese Daten sind nur für Mitglieder der jeweiligen Gruppe sichtbar. Wer den Gruppen-Code kennt, kann der Gruppe beitreten – teile ihn daher nur mit Personen, mit denen du die Liste teilen möchtest. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO.</p>
+
+      <h2 id="f5">5. Geteilte Preise</h2>
+      <p>Wenn du bei einem Artikel einen Preis einträgst, wird dieser <b>anonym</b> gespeichert und anderen Fillr-Nutzern als Schätzwert (mit ≈ markiert) angezeigt. Übertragen werden nur die Produktbezeichnung, der Laden, der Preis und der Zeitpunkt – <b>nicht</b> dein Name und nicht deine Nutzer-ID.</p>
+      <p>Rechtsgrundlage ist unser berechtigtes Interesse (Art. 6 Abs. 1 lit. f DSGVO), allen Nutzern möglichst aktuelle Preisangaben anzubieten. Ein Personenbezug wird dabei nicht hergestellt.</p>
+
+      <h2 id="f6">6. Dienstleister: Google Firebase</h2>
+      <p>Für Gruppen und geteilte Preise nutzen wir <b>Google Firebase</b> (Firebase Authentication und Cloud Firestore) der Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland.</p>
+      <ul>
+        <li><b>Anonyme Anmeldung:</b> Firebase vergibt deinem Gerät eine zufällige Nutzer-ID. Es werden keine Namen, E-Mail-Adressen oder Telefonnummern abgefragt.</li>
+        <li><b>Speicherort:</b> Die Datenbank liegt in Rechenzentren in der Europäischen Union.</li>
+        <li><b>Technische Daten:</b> Beim Verbindungsaufbau verarbeitet Google technisch notwendige Daten wie die IP-Adresse, um die Verbindung herzustellen und den Dienst abzusichern.</li>
+        <li><b>Auftragsverarbeitung:</b> Google verarbeitet die Daten in unserem Auftrag auf Grundlage der Datenverarbeitungsbedingungen von Google. Eine Übermittlung in die USA ist im Einzelfall nicht ausgeschlossen; Google LLC ist unter dem EU-US Data Privacy Framework zertifiziert.</li>
+      </ul>
+      <p>Weitere Informationen: <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">firebase.google.com/support/privacy</a></p>
+
+      <h2 id="f7">7. Zugriff auf Fotos</h2>
+      <p>Fillr greift nur dann auf deine Fotos zu, wenn du selbst ein Profilbild auswählst. Das ausgewählte Bild bleibt auf deinem Gerät und wird nicht hochgeladen. Den Zugriff kannst du jederzeit in den Einstellungen deines Smartphones widerrufen.</p>
+
+      <h2 id="f8">8. Externe Links</h2>
+      <p>Die Karten „Läden in der Nähe“ und „Angebote der Woche“ öffnen externe Angebote (Google Maps bzw. marktguru) in deinem Browser oder der jeweiligen App. Dabei gelten die Datenschutzbestimmungen dieser Anbieter. Fillr selbst überträgt dabei nur deinen eingegebenen Standort-Text als Suchbegriff an Google Maps.</p>
+
+      <h2 id="f9">9. Speicherdauer und Löschung</h2>
+      <ul>
+        <li><b>Lokale Daten</b> werden gelöscht, wenn du die App deinstallierst.</li>
+        <li><b>Einträge in Gruppen</b> kannst du jederzeit in der App löschen; sie werden dann auch auf dem Server entfernt.</li>
+        <li><b>Gruppe verlassen:</b> Deine Nutzer-ID wird dabei aus der Mitgliederliste entfernt.</li>
+        <li><b>Vollständige Löschung:</b> Schreib uns eine E-Mail mit dem Gruppen-Code, dann löschen wir die Gruppe mit allen Einträgen.</li>
+        <li><b>Geteilte Preise</b> enthalten keine personenbezogenen Daten und werden laufend durch neuere Angaben überschrieben.</li>
+      </ul>
+
+      <h2 id="f10">10. Deine Rechte</h2>
+      <p>Du hast das Recht auf Auskunft (Art. 15 DSGVO), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18), Datenübertragbarkeit (Art. 20) und Widerspruch gegen Verarbeitungen auf Grundlage berechtigter Interessen (Art. 21). Wende dich dazu einfach per E-Mail an uns.</p>
+      <p>Außerdem kannst du dich bei einer Datenschutz-Aufsichtsbehörde beschweren, zum Beispiel bei der Behörde deines Wohnorts.</p>
+
+      <h2 id="f11">11. Kinder</h2>
+      <p>Fillr richtet sich an Personen ab 13 Jahren. Wir erheben wissentlich keine Daten von jüngeren Kindern.</p>
+
+      <h2 id="f12">12. Änderungen</h2>
+      <p>Wenn sich Funktionen der App ändern – zum Beispiel wenn wir Werbung einbinden –, passen wir diese Datenschutzerklärung vorher an. Es gilt die jeweils hier veröffentlichte Fassung.</p>
+    </article>
+  </section>
+
+  <!-- PACEALYST -->
+  <section class="view" id="v-pacealyst">
+    <a class="back" href="#start">← Alle Apps</a>
+    <article>
+      <div class="eyebrow">PaceAlyst</div>
+      <h1>Datenschutzerklärung</h1>
+      <p class="meta">Stand: 11. November 2026</p>
+      <p>Diese Datenschutzerklärung gilt für die App <b>PaceAlyst</b>. Kurz gesagt: PaceAlyst rechnet alles direkt auf deinem Gerät und sendet keine Daten an uns.</p>
+
+      <h2>1. Verantwortlicher</h2>
+      <div class="box">
+        Benedikt Kunisch<br>
+        Gartenstraße 6<br>
+        97337 Dettelbach, Deutschland<br>
+        E-Mail: <a href="mailto:Benedikt.kunisch@gmx.de">Benedikt.kunisch@gmx.de</a>
+      </div>
+
+      <h2>2. Das Wichtigste in Kürze</h2>
+      <ul>
+        <li><b>Kein Konto</b>, keine Anmeldung.</li>
+        <li>Derzeit <b>kein Tracking</b> und keine Analyse-Dienste.</li>
+        <li><b>Keine Übertragung</b> deiner Eingaben an uns oder Dritte – alle Berechnungen laufen offline auf deinem Gerät.</li>
+      </ul>
+
+      <h2>3. Welche Daten die App verarbeitet</h2>
+      <p>Damit PaceAlyst rechnen kann, gibst du Werte ein, zum Beispiel:</p>
+      <ul>
+        <li>Zeiten, Distanzen und Pace (für Äquivalenz, Splits und Prognosen),</li>
+        <li>Herzfrequenz- und – falls freigeschaltet – Laktatwerte (für Trainingszonen),</li>
+        <li>Einstellungen wie Sprache und Einheit (km oder Meilen).</li>
+      </ul>
+      <p>Diese Angaben werden <b>ausschließlich lokal</b> auf deinem Gerät verarbeitet und gespeichert. Herzfrequenz- und Laktatwerte können Gesundheitsdaten sein – gerade deshalb verlassen sie dein Gerät nicht. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Bereitstellung der von dir genutzten Funktionen).</p>
+
+      <h2>4. Berechtigungen</h2>
+      <p>PaceAlyst benötigt für seine Funktionen keinen Zugriff auf Standort, Kontakte, Kamera oder Mikrofon.</p>
+
+      <h2>5. App-Stores</h2>
+      <p>Beim Herunterladen der App verarbeitet der jeweilige App-Store (z. B. Google Play) Daten nach seinen eigenen Datenschutzbestimmungen. Darauf haben wir keinen Einfluss.</p>
+
+      <h2>6. Speicherdauer und Löschung</h2>
+      <p>Alle Daten bleiben gespeichert, bis du sie in der App löschst oder die App deinstallierst. Danach sind sie vollständig entfernt.</p>
+
+      <h2>7. Deine Rechte</h2>
+      <p>Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch (Art. 15–21 DSGVO) sowie das Recht, dich bei einer Datenschutz-Aufsichtsbehörde zu beschweren. Da wir keine Daten von dir erhalten, liegen bei uns in der Regel keine Daten über dich vor.</p>
+
+      <h2>8. Kinder</h2>
+      <p>PaceAlyst richtet sich an Personen ab 13 Jahren.</p>
+
+      <h2>9. Änderungen</h2>
+      <p>Sollte eine künftige Version Daten übertragen (zum Beispiel für GPX-Strecken oder Werbung), passen wir diese Datenschutzerklärung vorher an.</p>
+    </article>
+  </section>
+
+  <!-- IMPRESSUM -->
+  <section class="view" id="v-impressum">
+    <a class="back" href="#start">← Alle Apps</a>
+    <article>
+      <div class="eyebrow">BK Apps</div>
+      <h1>Impressum &amp; Support</h1>
+
+      <h2>Angaben gemäß § 5 DDG</h2>
+      <div class="box">
+        Benedikt Kunisch<br>
+        Gartenstraße 6<br>
+        97337 Dettelbach, Deutschland
+      </div>
+
+      <h2>Kontakt &amp; Support</h2>
+      <p>Fragen, Fehler oder Wünsche zu Fillr oder PaceAlyst? Schreib uns – wir antworten so schnell wie möglich.</p>
+      <div class="box">E-Mail: <a href="mailto:Benedikt.kunisch@gmx.de">Benedikt.kunisch@gmx.de</a></div>
+
+      <h2>Verantwortlich für den Inhalt</h2>
+      <p>Benedikt Kunisch, Anschrift wie oben.</p>
+
+      <h2>Haftung für Inhalte und Links</h2>
+      <p>Die Inhalte dieser Seite wurden mit Sorgfalt erstellt. Für Inhalte externer Websites, auf die wir verlinken, sind ausschließlich deren Betreiber verantwortlich.</p>
+    </article>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 BK Apps</span>
+    <nav>
+      <a href="#fillr">Datenschutz Fillr</a>
+      <a href="#pacealyst">Datenschutz PaceAlyst</a>
+      <a href="#impressum">Impressum</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  var VIEWS = ['start', 'fillr', 'pacealyst', 'impressum'];
+  function show() {
+    var h = (location.hash || '').replace('#', '');
+    if (VIEWS.indexOf(h) < 0) h = 'start';
+    VIEWS.forEach(function (v) {
+      document.getElementById('v-' + v).classList.toggle('on', v === h);
+    });
+    document.querySelectorAll('nav.links a').forEach(function (a) {
+      a.classList.toggle('on', a.getAttribute('data-v') === h);
+    });
+    window.scrollTo(0, 0);
+  }
+  window.addEventListener('hashchange', show);
+  show();
+  // Inhaltsverzeichnis: zum Abschnitt scrollen, ohne die Seiten-Navigation zu ändern
+  document.querySelectorAll('[data-go]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      var el = document.getElementById(a.getAttribute('data-go'));
+      if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>
